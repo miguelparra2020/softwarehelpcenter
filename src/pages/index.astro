@@ -1,49 +1,69 @@
 ---
-import BaseHead from '$components/Head/BaseHead.astro';
-import Nav from '$components/Nav.astro';
-import HomeHeader from '$components/HomeHeader.astro';
-import Card from '$components/Card.astro';
-import Footer from '$components/Footer/Footer.astro'
+import { SITE,  } from '~/config.mjs';
+import Layout from '~/layouts/PageLayout.astro';
+import SesionInicial from '~/components/widgets/SesionInicial.astro';
+import SesionCategorias from '~/components/widgets/SesionCategorias.astro';
+// Curso:
+// import Curso from '~/components/widgets/Curso.astro';
+import LatestPosts from '~/components/blog/LatestPosts.astro';
+// import BlogList from '~/components/blog/List.astro';
+// import { fetchPosts } from '~/utils/blog';
+// import { BLOG_BASE } from '~/utils/permalinks';
 
-interface MarkdownFrontmatter {
-  date: number;
-}
+// export async function getStaticPaths({ paginate }) {
+//   if (BLOG?.disabled || BLOG?.list?.disabled) return [];
+//   return paginate(await fetchPosts(), {
+//     params: { blog: BLOG_BASE || undefined },
+//     pageSize: BLOG.postsPerPage,
+//   });
+// }
 
-let title = 'Creek';
-let description = 'A Theme for Astro';
-let seoDescription = 'Creek is a theme for Astro static site generator';
+// const { page } = Astro.props;
+const meta = {
+  title: SITE.title,
+  description: SITE.description,
+  dontUseTitleTemplate: true,
+};
 
-let allPosts = Astro.fetchContent<MarkdownFrontmatter>('./posts/*.md');
-allPosts = allPosts.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+
 ---
+<style>
+  .bienvenidos {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to bottom right,var(--tw-gradient-stops));
+    --tw-gradient-from: #2048ca;
+    --tw-gradient-to: rgb(99 102 241 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-to: rgb(217 70 239 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), #d1437c, var(--tw-gradient-to);
+    --tw-gradient-to: #861e76;
+}
+</style>
 
-<html lang="en">
-  <head>
-    <BaseHead title={title} description={seoDescription} />
-  </head>
+<Layout {meta}>
+  <!-- El menú y los links de menú están en el archivo data.js este archivo está por fuera del src -->
 
-  <body class="bg-white text-black font-body leading-normal personality-casual">
-    <Nav />
+  <!-- Sesión Inicial ******************* -->
 
-    <main class="py-12 lg:py-20">
-      <article class="max-w-6xl mx-auto px-3">
-        <HomeHeader title={title} description={description} />
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8" data-test="articles-section">
-          {allPosts.slice(0, 6).map(p => <div class="col-span-1"><Card post={p} /></div>)}
-        </section>
-      </article>
-    </main>
-    
-    <section class="flex space-x-8 justify-center text-xl pt-8 font-bold">
-      <a
-        href="/posts"
-        class="mr-8"
-        data-test="see-all-link"
-        >
-        See All<span class="squiggle">&rarr;</span>
-      </a>
-    </section>
+  <SesionInicial />
 
-    <Footer />
-  </body>
-</html>
+  <!-- Sesión Inicial ******************* -->
+
+  <!-- Sesión de categorias ******************* -->
+  <SesionCategorias  />
+<!-- Sesión de categorias ******************* -->
+
+  <!-- <BlogList posts={page.data} /> -->
+
+  <LatestPosts
+    title="Encuentra todas nuestras publicaciones de cursos, diplomados y contenido educativo."
+    information={`
+		`}
+    postIds={[
+      '',
+      
+    ]}
+  />
+</Layout>

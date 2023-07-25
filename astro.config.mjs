@@ -1,20 +1,56 @@
-// Full Astro Configuration API Documentation:
-// https://docs.astro.build/reference/configuration-reference
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { defineConfig } from 'astro/config';
+import vercel from '@astrojs/vercel/serverless';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
+import image from '@astrojs/image';
+import mdx from '@astrojs/mdx';
+import partytown from '@astrojs/partytown';
+import compress from 'astro-compress';
+import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs';
+import { SITE } from './src/config.mjs';
+import react from "@astrojs/react";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const whenExternalScripts = (items = []) => SITE.googleAnalyticsId ? Array.isArray(items) ? items.map(item => item()) : [items()] : [];
 
-// @type-check enabled!
-// VSCode and other TypeScript-enabled text editors will provide auto-completion,
-// helpful tooltips, and warnings if your exported object is invalid.
-// You can disable this by removing "@ts-check" and `@type` comments below.
-
-// @ts-check
-export default /** @type {import('astro').AstroUserConfig} */ ({
-  // Enable the Preact renderer to support Preact JSX components.
-  renderers: ["@astrojs/renderer-preact"],
-  devOptions: {
-    tailwindConfig: "./tailwind.config.js",
+// https://astro.build/config
+export default defineConfig({
+  site: SITE.origin,
+  base: SITE.basePathname,
+  trailingSlash: SITE.trailingSlash ? 'always' : 'never',
+  output: 'hybrid',
+  adapter: vercel({
+    analytics: true
+  }),
+  markdown: {
+    remarkPlugins: [readingTimeRemarkPlugin]
   },
-  buildOptions: {
-    site: "https://yourdomain.com/",
-    sitemap: true,
-  },
+  integrations: [tailwind({
+    config: {
+      applyBaseStyles: false
+    }
+  }), sitemap(), image({
+    serviceEntryPoint: '@astrojs/image/sharp'
+  }), mdx(), ...whenExternalScripts(() => partytown({
+    config: {
+      forward: ['dataLayer.push']
+    }
+  })), compress({
+    css: true,
+    html: {
+      removeAttributeQuotes: false
+    },
+    img: false,
+    js: true,
+    svg: false,
+    logger: 1
+  }), react()],
+  vite: {
+    resolve: {
+      alias: {
+        '~': path.resolve(__dirname, './src')
+      }
+    }
+  }
 });
