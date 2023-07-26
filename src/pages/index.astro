@@ -1,11 +1,12 @@
 ---
 import { SITE,  } from '~/config.mjs';
 import Layout from '~/layouts/PageLayout.astro';
-import SesionInicial from '~/components/widgets/SesionInicial.astro';
-import SesionCategorias from '~/components/widgets/SesionCategorias.astro';
+import Bienvenida from '~/components/widgets/SesionBienvenida.astro'
+// import SesionInicial from '~/components/widgets/SesionInicial.astro';
+// import SesionCategorias from '~/components/widgets/SesionCategorias.astro';
 // Curso:
 // import Curso from '~/components/widgets/Curso.astro';
-import LatestPosts from '~/components/blog/LatestPosts.astro';
+// import LatestPosts from '~/components/blog/LatestPosts.astro';
 // import BlogList from '~/components/blog/List.astro';
 // import { fetchPosts } from '~/utils/blog';
 // import { BLOG_BASE } from '~/utils/permalinks';
@@ -45,19 +46,21 @@ const meta = {
 <Layout {meta}>
   <!-- El menú y los links de menú están en el archivo data.js este archivo está por fuera del src -->
 
+  <Bienvenida/>
+
   <!-- Sesión Inicial ******************* -->
 
-  <SesionInicial />
+  <!-- <SesionInicial /> -->
 
   <!-- Sesión Inicial ******************* -->
 
   <!-- Sesión de categorias ******************* -->
-  <SesionCategorias  />
+  <!-- <SesionCategorias  /> -->
 <!-- Sesión de categorias ******************* -->
 
   <!-- <BlogList posts={page.data} /> -->
 
-  <LatestPosts
+  <!-- <LatestPosts
     title="Encuentra todas nuestras publicaciones de cursos, diplomados y contenido educativo."
     information={`
 		`}
@@ -65,5 +68,5 @@ const meta = {
       '',
       
     ]}
-  />
+  /> -->
 </Layout>
