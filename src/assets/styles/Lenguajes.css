@@ -9,6 +9,9 @@
     width: 40rem;
     height: 40vh;
     position: relative;
+    @media (max-width: 768px) {
+        width: 90%;
+    }
 }
 .contedor_3{
     width: 100%;
@@ -61,4 +64,30 @@
 
 .numeral {
     color: #64748b;
+}
+
+.fila_1 {
+    animation: mover-izquierda 30s linear infinite;
+}
+
+.fila_2 {
+    animation: mover-derecha 30s linear infinite;
+}
+
+@keyframes mover-izquierda {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(30%);
+    }
+}
+
+@keyframes mover-derecha {
+    0% {
+        transform: translateX(30%);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
