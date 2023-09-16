@@ -214,6 +214,7 @@ Para ello entre este archivo en el área interactiva --- js --- allí eh puesto 
 
 en este archivo podemos modificar el style etc.
 
+Hola soy software
 ![Imagen Nuestras Categorias](https://res.cloudinary.com/dqryrvrzh/image/upload/v1687667617/The%20House%20Exclusive/Reame/Sesion_categorias_hxuhss.png)
 
 
